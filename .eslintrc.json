@@ -6,15 +6,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
+    "extends": ["plugin:prettier/recommended"],
     "rules": {
         "@typescript-eslint/naming-convention": "warn",
         "@typescript-eslint/semi": "warn",
-        "curly": "warn",
+        "curly": ["warn", "multi"],
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
-        "semi": "off"
+        "semi": "off",
+        "prettier/prettier": "warn"
     },
     "ignorePatterns": [
         "out",
