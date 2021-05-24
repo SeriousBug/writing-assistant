@@ -1,28 +1,62 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+import * as _ from "lodash";
 import * as vscode from "vscode";
+import { UnknownLanguageError } from "./error";
+import { parse } from "./parser";
+import * as alex from "alex";
+
+const EXTENSION_NAME = "Writing Assistant";
+
+const ALEX_WARNING = vscode.languages.createDiagnosticCollection("alex");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
   console.log(
     'Congratulations, your extension "writing-assistant" is now active!'
   );
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
-    "writing-assistant.helloWorld",
+    "writing-assistant.analyzeFile",
     () => {
-      // The code you place here will be executed every time your command is executed
+      console.log(`${EXTENSION_NAME} is analyzing the file.`);
+      const editor = vscode.window.activeTextEditor;
+      if (_.isUndefined(editor)) {
+        console.log("No document open, doing nothing.");
+        return;
+      }
 
-      // Display a message box to the user
-      vscode.window.showInformationMessage(
-        "Hello World from Writing Assistant!"
-      );
+      try {
+        const parsed = parse(editor.document);
+        let diagnostics: vscode.Diagnostic[] = [];
+        parsed.forEach((comment) => {
+          const checked = alex.text(comment.text).messages;
+          checked.forEach((found) => {
+            const { location, reason } = found;
+            const diagnostic = new vscode.Diagnostic(
+              new vscode.Range(
+                new vscode.Position(
+                  comment.range.start.line + location.start.line - 1, // why -1?
+                  comment.range.start.character + location.start.column
+                ),
+                new vscode.Position(
+                  comment.range.start.line + location.end.line - 1,
+                  comment.range.start.character + location.end.column
+                )
+              ),
+              reason
+            );
+            diagnostics.push(diagnostic);
+          });
+        });
+        ALEX_WARNING.set(editor.document.uri, diagnostics);
+      } catch (err) {
+        console.warn(err);
+        if (err instanceof UnknownLanguageError)
+          vscode.window.showErrorMessage(
+            "The programming language for the current file is not supported."
+          );
+        return;
+      }
     }
   );
 
