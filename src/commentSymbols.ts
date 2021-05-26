@@ -107,7 +107,7 @@ export function languageIdToDelimiters(languageId: string): CommentSymbols {
       case "vue":
         return { singleLine: "//", multiLine: ["/*", "*/"] };
       case "css":
-        return { singleLine: "/*", multiLine: ["/*", "*/"] };
+        return { multiLine: ["/*", "*/"] };
       case "coffeescript":
       case "dockerfile":
       case "gdscript":
@@ -122,7 +122,6 @@ export function languageIdToDelimiters(languageId: string): CommentSymbols {
       case "shellscript":
       case "tcl":
       case "yaml":
-      case "tcl":
         return { singleLine: "#" };
       case "elixir":
       case "python":

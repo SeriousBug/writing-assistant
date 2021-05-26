@@ -17,7 +17,7 @@
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
         "semi": "off",
-        "prettier/prettier": "warn"
+        "prettier/prettier": ["warn", {"trailingComma": "all"}]
     },
     "ignorePatterns": [
         "out",
