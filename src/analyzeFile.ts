@@ -4,10 +4,10 @@ import { parse } from "./parser";
 import * as alex from "alex";
 import { EXTENSION_NAME, ALEX_WARNING } from "./extension";
 
-export function analyzeFile(textEditor: vscode.TextEditor) {
+export function analyzeFile(document: vscode.TextDocument) {
   console.log(`${EXTENSION_NAME} is analyzing the file.`);
   try {
-    const parsed = parse(textEditor.document);
+    const parsed = parse(document);
     let diagnostics: vscode.Diagnostic[] = [];
     parsed.forEach((comment) => {
       const checked = alex.text(comment.text).messages;
@@ -29,7 +29,7 @@ export function analyzeFile(textEditor: vscode.TextEditor) {
         diagnostics.push(diagnostic);
       });
     });
-    ALEX_WARNING.set(textEditor.document.uri, diagnostics);
+    ALEX_WARNING.set(document.uri, diagnostics);
   } catch (err) {
     console.warn(err);
     if (err instanceof UnknownLanguageError)

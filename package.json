@@ -97,7 +97,18 @@
 				"command": "writing-assistant.analyzeFile",
 				"title": "Writing Assistant: Analyze File"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Writing Analyzer",
+			"properties": {
+				"writing-analyzer.autoAnalyzeOn": {
+					"description": "Automatically analyze the current file when editing or saving.",
+					"type": "string",
+					"default": "save",
+					"enum": ["save", "edit", "never"]
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",
