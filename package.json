@@ -1,4 +1,5 @@
 {
+	"license": "MIT",
 	"name": "writing-assistant",
 	"displayName": "Writing Assistant",
 	"description": "Catch writing mistakes and insensitive language, improve your writing quality. Works on strings and comments of programming languages, and markdown files. Powered by write-good and alex.",
@@ -105,15 +106,21 @@
 					"description": "Automatically analyze the current file when editing or saving.",
 					"type": "string",
 					"default": "save",
-					"enum": ["save", "edit", "never"]
+					"enum": [
+						"save",
+						"edit",
+						"never"
+					]
 				}
 			}
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "yarn run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"vscode:prepublish": "yarn run -S esbuild-base -- --minify",
+		"esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+		"compile": "npm run -S esbuild-base -- --sourcemap",
+		"watch": "npm run -S esbuild-base -- --sourcemap --watch",
+		"fmt": "prettier --write \"src/**/*.ts\"&& npm run test -- --fix",
 		"pretest": "yarn run compile && yarn run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js"
@@ -124,20 +131,34 @@
 		"@types/lodash": "^4.14.170",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
+		"@types/vfile": "^4.0.0",
 		"@types/vscode": "^1.56.0",
 		"@typescript-eslint/eslint-plugin": "^4.14.1",
 		"@typescript-eslint/parser": "^4.14.1",
+		"esbuild": "^0.12.5",
 		"eslint": "^7.19.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^3.4.0",
 		"glob": "^7.1.6",
 		"mocha": "^8.2.1",
 		"prettier": "^2.3.0",
-		"typescript": "^4.1.3",
+		"rimraf": "^3.0.2",
+		"typescript": "^4.3.2",
 		"vscode-test": "^1.5.0"
 	},
 	"dependencies": {
-		"alex": "^9.1.0",
-		"lodash": "^4.17.21"
+		"dictionary-en": "^3.1.0",
+		"lodash": "^4.17.21",
+		"retext-english": "^3.0.4",
+		"retext-equality": "^5.7.0",
+		"retext-indefinite-article": "^2.0.3",
+		"retext-passive": "^3.0.0",
+		"retext-readability": "^6.0.0",
+		"retext-repeated-words": "^3.0.0",
+		"retext-simplify": "^6.0.0",
+		"retext-spell": "^4.0.1",
+		"unified": "^9.2.1",
+		"vfile": "^5.0.1",
+		"vfile-sort": "^3.0.0"
 	}
 }
