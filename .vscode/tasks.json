@@ -11,9 +11,18 @@
 			"presentation": {
 				"reveal": "never"
 			},
+			"group": "build",
+		},
+		{
+			"type": "npm",
+			"script": "compile",
+			"isBackground": false,
+			"presentation": {
+				"reveal": "never",
+			},
 			"group": {
 				"kind": "build",
-				"isDefault": true
+				"isDefault": true,
 			}
 		}
 	]

@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import * as vscode from "vscode";
 import { analyzeFile } from "./analyzeFile";
+import { getConfig } from "./config";
 
 export const EXTENSION_NAME = "Writing Assistant";
 export const EXTENSION_CODE = "writing-assistant";
@@ -32,8 +33,7 @@ function setupCallbacks(context: vscode.ExtensionContext) {
   for (const disposable of callbackDisposables) disposable.dispose();
   callbackDisposables = [];
 
-  const config = vscode.workspace.getConfiguration(EXTENSION_CODE);
-  const autoAnalyzeOn = config.get("writing-analyzer.autoAnalyzeOn");
+  const autoAnalyzeOn = getConfig("autoAnalyzeOn");
   switch (autoAnalyzeOn) {
     case "edit":
       const disposableEdit = vscode.workspace.onDidChangeTextDocument((event) =>
@@ -41,7 +41,6 @@ function setupCallbacks(context: vscode.ExtensionContext) {
       );
       callbackDisposables.push(disposableEdit);
     case "save":
-    case undefined:
       const disposableSave =
         vscode.workspace.onDidSaveTextDocument(analyzeFile);
       callbackDisposables.push(disposableSave);

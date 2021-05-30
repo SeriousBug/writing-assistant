@@ -476,6 +476,11 @@ cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+cuss@^1.15.0:
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/cuss/-/cuss-1.21.0.tgz#1aba3bb911fadda8566855ed036295af8116be40"
+  integrity sha512-X3VvImImJ5q6w0wOgJtxAX+RC06d26egp/A/vdSxqOrsRtAA9biXAkc4PZGj/3gx0+z+gDFri6BpcpwuG1/UEw==
+
 dale-chall-formula@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/dale-chall-formula/-/dale-chall-formula-1.0.5.tgz#b6655b9e8bfe210a4426778eb3349a3b6f55d7ff"
@@ -1074,6 +1079,11 @@ lodash.difference@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
   integrity sha1-nMtOUF1Ia5FlE0V3KIWi3yf9AXw=
 
+lodash.intersection@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.intersection/-/lodash.intersection-4.4.0.tgz#0a11ba631d0e95c23c7f2f4cbb9a692ed178e705"
+  integrity sha1-ChG6Yx0OlcI8fy9Mu5ppLtF45wU=
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -1460,6 +1470,20 @@ retext-passive@^3.0.0:
     nlcst-to-string "^2.0.0"
     unist-util-find-before "^2.0.0"
     unist-util-position "^3.0.0"
+
+retext-profanities@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/retext-profanities/-/retext-profanities-6.1.0.tgz#95c0af011ac66df980b85b47655c770cb18abf44"
+  integrity sha512-40Ym0WOgy7rRY4tR2iL01g3Y5Ql+9NBV21hycIhNX3uv+6vjaWB30NWN+tTcxNIWBJEwXHoTDMiVdAMm6ZpHVA==
+  dependencies:
+    cuss "^1.15.0"
+    lodash.difference "^4.5.0"
+    lodash.intersection "^4.4.0"
+    nlcst-search "^2.0.0"
+    nlcst-to-string "^2.0.0"
+    object-keys "^1.0.9"
+    pluralize "^8.0.0"
+    quotation "^1.0.0"
 
 retext-readability@^6.0.0:
   version "6.0.0"

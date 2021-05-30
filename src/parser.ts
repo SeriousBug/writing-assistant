@@ -44,7 +44,7 @@ function languageIdToRegex(languageId: string): RegExp {
     finalRegex,
     // g: find all matches, not just one
     // m: each match can span multiple lines, required for multiline comments
-    "gm"
+    "gm",
   );
 }
 
