@@ -100,9 +100,9 @@
 			}
 		],
 		"configuration": {
-			"title": "Writing Analyzer",
+			"title": "Writing Assistant",
 			"properties": {
-				"writing-analyzer.autoAnalyzeOn": {
+				"writing-assistant.autoAnalyzeOn": {
 					"description": "Automatically analyze the current file when editing or saving.",
 					"type": "string",
 					"default": "never",
@@ -111,6 +111,53 @@
 						"edit",
 						"never"
 					]
+				},
+				"writing-assistant.confidenceLimit": {
+					"description": "Some analyses have a confidence level representing how certain the analysis is that it caught a real issue. This option sets the minimum confidence required before reporting an issue, between 0 (always report) and 1 (only report if fully certain).",
+					"type": "number",
+					"default": 0.9,
+					"minimum": 0,
+					"maximum": 1
+				},
+				"writing-assistant.analyses.equality": {
+					"description": "Check for potentially insensitive or inconsiderate language.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.profanities": {
+					"description": "Check for profane and vulgar wording.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.indefiniteArticle": {
+					"description": "Checks if indefinite articles (a, an) are used correctly.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.passive": {
+					"description": "Check for passive voice.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.readability": {
+					"description": "Check for hard to read sentences.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.repeated": {
+					"description": "Check for incorrectly repeated words.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.simplify": {
+					"description": "Check phrases for simpler alternatives.",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.redundantAcronyms": {
+						"description": "Check for redundant acronyms like \"ATM machine\".",
+						"type": "boolean",
+						"default": true
 				}
 			}
 		}
@@ -155,6 +202,7 @@
 		"retext-passive": "^3.0.0",
 		"retext-profanities": "^6.1.0",
 		"retext-readability": "^6.0.0",
+		"retext-redundant-acronyms": "^3.0.0",
 		"retext-repeated-words": "^3.0.0",
 		"retext-simplify": "^6.0.0",
 		"retext-spell": "^4.0.1",

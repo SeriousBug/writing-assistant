@@ -1,20 +1,27 @@
-import vscode from "vscode";
 import _ from "lodash";
+import vscode from "vscode";
 
 export type Config = {
   autoAnalyzeOn: "edit" | "save" | "never";
   confidenceLimit: number;
+  analyses: {
+    equality: boolean;
+    profanities: boolean;
+    indefiniteArticle: boolean;
+    passive: boolean;
+    readability: boolean;
+    repeated: boolean;
+    simplify: boolean;
+  };
 };
 
-const DEFAULTS: Config = {
-  autoAnalyzeOn: "save",
-  confidenceLimit: 0.8,
-};
 
-const VSCODE_CONFIG = vscode.workspace.getConfiguration("writing-assistant");
+const VSCODE_CONFIG = () =>
+  vscode.workspace.getConfiguration("writing-assistant");
 
 export function getConfig(key: keyof Config) {
-  const selected = VSCODE_CONFIG.get(`writing-assistant.${key}`);
-  if (_.isUndefined(selected)) return DEFAULTS[key];
+  const selected = VSCODE_CONFIG().get(key);
+  if (_.isUndefined(selected))
+    throw new Error(`Unknown configuration key ${key}`);
   return selected;
 }

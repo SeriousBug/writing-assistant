@@ -1503,6 +1503,19 @@ retext-readability@^6.0.0:
     syllable "^4.0.0"
     unist-util-visit "^2.0.0"
 
+retext-redundant-acronyms@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/retext-redundant-acronyms/-/retext-redundant-acronyms-3.0.0.tgz#778271064fb55ce6aac06ffe77ac2f12f3682efe"
+  integrity sha512-pu5um9ObH+j/AguHPVm+u23DK43zey2Jim0dmzccczvilbIRiYh7ZQMSOIuLNpE+7jNP0quX3oe/ommrLlwECQ==
+  dependencies:
+    nlcst-normalize "^2.0.0"
+    nlcst-search "^2.0.0"
+    nlcst-to-string "^2.0.0"
+    pluralize "^8.0.0"
+    quotation "^1.0.0"
+    unist-util-find-after "^3.0.0"
+    unist-util-position "^3.0.0"
+
 retext-repeated-words@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/retext-repeated-words/-/retext-repeated-words-3.0.0.tgz#741fa9ff82a8c900d52e2697649813740aaa11f7"
@@ -1794,6 +1807,13 @@ unified@^9.2.1:
     is-plain-obj "^2.0.0"
     trough "^1.0.0"
     vfile "^4.0.0"
+
+unist-util-find-after@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/unist-util-find-after/-/unist-util-find-after-3.0.0.tgz#5c65fcebf64d4f8f496db46fa8fd0fbf354b43e6"
+  integrity sha512-ojlBqfsBftYXExNu3+hHLfJQ/X1jYY/9vdm4yZWjIbf0VuWF6CRufci1ZyoD/wV2TYMKxXUoNuoqwy+CkgzAiQ==
+  dependencies:
+    unist-util-is "^4.0.0"
 
 unist-util-find-before@^2.0.0:
   version "2.0.5"
