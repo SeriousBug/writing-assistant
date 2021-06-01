@@ -155,9 +155,68 @@
 					"default": true
 				},
 				"writing-assistant.analyses.redundantAcronyms": {
-						"description": "Check for redundant acronyms like \"ATM machine\".",
+					"description": "Check for redundant acronyms like \"ATM machine\".",
+					"type": "boolean",
+					"default": true
+				},
+				"writing-assistant.analyses.intensify": {
+						"description": "Check for weak and mitigating wording.",
 						"type": "boolean",
 						"default": true
+				},
+				"writing-assistant.equality.noBinary": {
+					"description": "Warn about all binary references, e.g. \"he\" or \"she\".",
+					"type": "boolean",
+					"default": false
+				},
+				"writing-assistant.profanities.sureness": {
+					"description": "How sure the analysis should be before warning about profanities. 0 = report all, 1 = report maybes, 2 = report likely ones only.",
+					"type": "number",
+					"default": 1,
+					"enum": [
+						0,
+						1,
+						2
+					]
+				},
+				"writing-assistant.equality.ignore": {
+					"description": "Do not warn about these phrases.",
+					"type": "array",
+					"default": []
+				},
+				"writing-assistant.passive.ignore": {
+					"description": "Do not warn about these phrases.",
+					"type": "array",
+					"default": []
+				},
+				"writing-assistant.readability.age": {
+					"description": "Age of the target reader.",
+					"type": "number",
+					"default": 18,
+					"minimum": 0
+				},
+				"writing-assistant.readability.minWords": {
+					"description": "Short sentences can throw off the analysis. Ignore sentences shorter than this.",
+					"type": "number",
+					"default": 5,
+					"minimum": 1
+				},
+				"writing-assistant.readability.threshold": {
+					"description": "How sure the analysis should be before warning.",
+					"type": "number",
+					"default": 0.5,
+					"minimum": 0,
+					"maximum": 1
+				},
+				"writing-assistant.simplify.ignore": {
+					"description": "Do not warn about these phrases.",
+					"type": "array",
+					"default": []
+				},
+				"writing-assistant.intensify.ignore": {
+					"description": "Do not warn about these phrases.",
+					"type": "array",
+					"default": []
 				}
 			}
 		}
@@ -199,6 +258,7 @@
 		"retext-english": "^3.0.4",
 		"retext-equality": "^5.7.0",
 		"retext-indefinite-article": "^2.0.3",
+		"retext-intensify": "^5.0.0",
 		"retext-passive": "^3.0.0",
 		"retext-profanities": "^6.1.0",
 		"retext-readability": "^6.0.0",

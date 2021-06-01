@@ -287,6 +287,16 @@ argparse@^2.0.1:
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
+arr-union@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/arr-union/-/arr-union-3.1.0.tgz#e39b09aea9def866a8f206e288af63919bae39c4"
+  integrity sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=
+
+array-differ@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/array-differ/-/array-differ-3.0.0.tgz#3cbb3d0f316810eafcc47624734237d6aee4ae6b"
+  integrity sha512-THtfYS6KtME/yIAhKjZ2ul7XI96lQGHRputJQHO80LAWQnuGP4iCIN8vdMRboGbIEYBwU33q8Tch1os2+X0kMg==
+
 array-iterate@^1.0.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/array-iterate/-/array-iterate-1.1.4.tgz#add1522e9dd9749bb41152d08b845bd08d6af8b7"
@@ -754,6 +764,11 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
+fillers@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/fillers/-/fillers-1.1.4.tgz#e757581ef442fb290ccc4c404204ab7c3d088440"
+  integrity sha512-AVPsKqCXIwdyZ+8Pp+rkoJKI6xlfteqie++Bfx4yZKKiV7M0lzRF5w5Ou/wWa94f9WU0IpoZU0ymLl/1wv0Sag==
+
 find-up@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-5.0.0.tgz#4c92819ecb7083561e4f4a240a86be5198f536fc"
@@ -906,6 +921,11 @@ he@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+
+hedges@^1.0.0:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/hedges/-/hedges-1.2.5.tgz#a000e94f6f271a65feeb5ea5f2f1ef51ec5c87fd"
+  integrity sha512-UI91BDNLST4Nm0AH49L6QhZjpd36gRXVtddT0/i1CoBCghj1fl+MjRUtZLRDxg63h4imRVYQRK7yxaCyzdfITA==
 
 http-proxy-agent@^4.0.1:
   version "4.0.1"
@@ -1460,6 +1480,21 @@ retext-indefinite-article@^2.0.3:
     unist-util-is "^4.0.0"
     unist-util-visit "^2.0.0"
 
+retext-intensify@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/retext-intensify/-/retext-intensify-5.0.0.tgz#3add85a88a5fb72a1f2b0c9e6bc212cae865aa11"
+  integrity sha512-xQxTDhYg637EoPhiTXKH8uFLGm/Xzqcu5sMom4aAiSqugwMYIWDZ8qZGoh4vNXBA52sezC9MJleU6UFOCcf3ZA==
+  dependencies:
+    arr-union "^3.0.0"
+    array-differ "^3.0.0"
+    fillers "^1.0.0"
+    hedges "^1.0.0"
+    nlcst-search "^2.0.0"
+    nlcst-to-string "^2.0.0"
+    quotation "^1.0.0"
+    unist-util-position "^3.0.0"
+    weasels "^1.0.0"
+
 retext-passive@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/retext-passive/-/retext-passive-3.0.0.tgz#dbec1fff549c9e5295c537f2e03fc23903becdae"
@@ -1960,6 +1995,11 @@ vscode-test@^1.5.0:
     https-proxy-agent "^5.0.0"
     rimraf "^3.0.2"
     unzipper "^0.10.11"
+
+weasels@^1.0.0:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/weasels/-/weasels-1.1.5.tgz#d9b0ed899e09c7f0d369d1c6c24305f0a96d4851"
+  integrity sha512-vdefDFRcmFx/Q3TJWG3pR4RJb/0pdVEQKcWnFeD3iL3RdM9yKn75uRcbm4obRXUR7CYL62mBwxlaUOCuWQQdWA==
 
 which@2.0.2, which@^2.0.1:
   version "2.0.2"
