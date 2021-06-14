@@ -1,9 +1,9 @@
 import * as _ from "lodash";
 import * as vscode from "vscode";
 import { UnknownLanguageError } from "./error";
-import { parse } from "./parser";
-import { EXTENSION_NAME, ALEX_WARNING } from "./extension";
-import { analyzer } from "./analyzer";
+import { Comment, parse as commentParser } from "./parser";
+import { EXTENSION_NAME, WARNING } from "./extension";
+import { analyzer as plaintextAnalyzer, markdownAnalyzer } from "./analyzer";
 import { Processor } from "unified";
 import { VFile } from "vfile";
 import { sort as vfileSort, VFileMessage } from "vfile-sort";
@@ -35,48 +35,22 @@ function confidence(message: AnalyzedMessage): number {
 export async function analyzeFile(document: vscode.TextDocument) {
   console.log(`${EXTENSION_NAME} is analyzing the file.`);
   try {
-    const parsed = parse(document);
-    let diagnostics: vscode.Diagnostic[] = [];
-    const processor: Processor = analyzer();
-    const confidenceLimit: number = getConfig("confidenceLimit");
+    const diagnostics: vscode.Diagnostic[] = [];
 
-    await Promise.all(
-      parsed.map(async (comment) => {
-        const file = new VFile(comment.text);
-        const tree = processor.parse(file);
-        await processor.run(tree, file);
+    if (document.languageId === "markdown") {
+      const processor = markdownAnalyzer();
+      await analyzeDocument(processor, diagnostics, document);
+      
+    } else if (document.languageId === "plaintext") {
+      const processor = plaintextAnalyzer();
+      await analyzeDocument(processor, diagnostics, document);
+    } else {
+      const parsed = commentParser(document);
+      const processor = plaintextAnalyzer();
+      await analyzeComments(parsed, processor, diagnostics, document);
+    }
 
-        vfileSort(file);
-        for (const found of file.messages as AnalyzedMessage[]) {
-          if (_.isNull(found.position)) {
-            console.warn(`Got warning without a location: ${found.reason}`);
-            return;
-          }
-          if (confidence(found) < confidenceLimit) {
-            console.log(
-              `Skipping warning due to low confidence (limit ${confidenceLimit}): ${found.reason}`,
-            );
-            return;
-          }
-          const diagnostic = new vscode.Diagnostic(
-            new vscode.Range(
-              new vscode.Position(
-                comment.range.start.line + found.position.start.line - 1,
-                comment.range.start.character + found.position.start.column,
-              ),
-              new vscode.Position(
-                comment.range.start.line + found.position.end.line - 1,
-                comment.range.start.character + found.position.end.column,
-              ),
-            ),
-            `(${found.ruleId}): ${found.reason}`,
-          );
-          diagnostic.source = found.source;
-          diagnostics.push(diagnostic);
-        }
-      }),
-    );
-    ALEX_WARNING.set(document.uri, diagnostics);
+    WARNING.set(document.uri, diagnostics);
   } catch (err) {
     if (err instanceof UnknownLanguageError)
       vscode.window.showErrorMessage(
@@ -86,5 +60,69 @@ export async function analyzeFile(document: vscode.TextDocument) {
       vscode.window.showErrorMessage(err);
       throw err;
     }
+  }
+}
+
+const ZERO_POSITION = new vscode.Position(0, 0);
+
+async function analyzeDocument(processor: Processor, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument) {
+  const file = new VFile(document.getText());
+  const tree = processor.parse(file);
+  await processor.run(tree, file);
+
+  vfileSort(file);
+  reportMessages(ZERO_POSITION, file, diagnostics, document);
+}
+
+async function analyzeComments(parsed: Comment[], processor: Processor, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument) {
+  await Promise.all(
+    parsed.map(async (comment) => {
+      const file = new VFile(comment.text);
+      const tree = processor.parse(file);
+      await processor.run(tree, file);
+
+      vfileSort(file);
+      reportMessages(comment.range.start, file, diagnostics, document);
+    })
+  );
+}
+
+function reportMessages(offset: vscode.Position, file: VFile, diagnostics: vscode.Diagnostic[], document: vscode.TextDocument) {
+  const confidenceLimit: number = getConfig("confidenceLimit");
+
+  for (const found of file.messages as AnalyzedMessage[]) {
+    if (_.isNull(found.position)) {
+      console.warn(`Got warning without a location: ${found.reason}`);
+      continue;
+    }
+    if (confidence(found) < confidenceLimit) {
+      console.log(
+        `Skipping warning due to low confidence (limit ${confidenceLimit}): ${found.reason}`
+      );
+      continue;
+    }
+    const diagnostic = new vscode.Diagnostic(
+      new vscode.Range(
+        new vscode.Position(
+          offset.line + found.position.start.line - 1,
+          offset.character + found.position.start.column
+        ),
+        new vscode.Position(
+          offset.line + found.position.end.line - 1,
+          offset.character + found.position.end.column
+        )
+      ),
+      found.reason
+    );
+    diagnostic.source = `${found.source} (${found.ruleId})`;
+    diagnostics.push(diagnostic);
+    // if (found.expected) {
+    //   for (const solution of found.expected) {
+    //     const action = new vscode.CodeAction(found.ruleId, vscode.CodeActionKind.QuickFix);
+    //     action.diagnostics = [diagnostic];
+    //     action.edit = new vscode.WorkspaceEdit();
+    //     action.edit.replace(document.uri, diagnostic.range, solution);
+    //   }
+    // }
   }
 }

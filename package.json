@@ -115,7 +115,7 @@
 				"writing-assistant.confidenceLimit": {
 					"description": "Some analyses have a confidence level representing how certain the analysis is that it caught a real issue. This option sets the minimum confidence required before reporting an issue, between 0 (always report) and 1 (only report if fully certain).",
 					"type": "number",
-					"default": 0.9,
+					"default": 0.7,
 					"minimum": 0,
 					"maximum": 1
 				},
@@ -160,9 +160,9 @@
 					"default": true
 				},
 				"writing-assistant.analyses.intensify": {
-						"description": "Check for weak and mitigating wording.",
-						"type": "boolean",
-						"default": true
+					"description": "Check for weak and mitigating wording.",
+					"type": "boolean",
+					"default": true
 				},
 				"writing-assistant.equality.noBinary": {
 					"description": "Warn about all binary references, e.g. \"he\" or \"she\".",
@@ -255,6 +255,10 @@
 	"dependencies": {
 		"dictionary-en": "^3.1.0",
 		"lodash": "^4.17.21",
+		"remark-footnotes": "^3.0.0",
+		"remark-gfm": "^1.0.0",
+		"remark-parse": "^9.0.0",
+		"remark-retext": "^4.0.0",
 		"retext-english": "^3.0.4",
 		"retext-equality": "^5.7.0",
 		"retext-indefinite-article": "^2.0.3",

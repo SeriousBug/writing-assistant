@@ -3,7 +3,7 @@ import { TextDocument, Range } from "vscode";
 import { languageIdToDelimiters } from "./commentSymbols";
 import { ParserError } from "./error";
 
-type Comment = {
+export type Comment = {
   type: "singleLine" | "multiLine";
   text: string;
   range: Range;

@@ -10,9 +10,13 @@ import repeated from "retext-repeated-words";
 import simplify from "retext-simplify";
 import intensify from "retext-intensify";
 import unified from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkRetext from "remark-retext";
+import remarkFootnotes from "remark-footnotes";
 
-export function analyzer() {
-  const processor = unified().use(english);
+
+function addAnalyzers(processor) {
   const config = getConfig("analyses");
   if (config.equality) processor.use(equality, getConfig("equality"));
   if (config.profanities) processor.use(profanities, getConfig("profanities"));
@@ -24,4 +28,20 @@ export function analyzer() {
   if (config.redundantAcronyms) processor.use(redundantAcronyms);
   if (config.intensify) processor.use(intensify, getConfig("intensify"));
   return processor();
+}
+
+
+export function analyzer() {
+  const processor = unified().use(english);
+  return addAnalyzers(processor);
+}
+
+
+export function markdownAnalyzer() {
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkFootnotes)
+    .use(remarkRetext, analyzer());
+  return addAnalyzers(processor);
 }

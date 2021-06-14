@@ -6,7 +6,8 @@ import { getConfig } from "./config";
 export const EXTENSION_NAME = "Writing Assistant";
 export const EXTENSION_CODE = "writing-assistant";
 
-export const ALEX_WARNING = vscode.languages.createDiagnosticCollection("alex");
+export const WARNING =
+  vscode.languages.createDiagnosticCollection("writing-assistant");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
