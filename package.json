@@ -2,8 +2,12 @@
 	"license": "MIT",
 	"name": "writing-assistant",
 	"displayName": "Writing Assistant",
-	"description": "Catch writing mistakes and insensitive language, improve your writing quality. Works on strings and comments of programming languages, and markdown files. Powered by write-good and alex.",
-	"version": "0.0.1",
+	"description": "Catch writing mistakes and insensitive language, improve your writing quality. Works on comments of programming languages, and markdown files.",
+	"version": "0.1.0",
+	"publisher": "KaanGenc",
+	"repository": {
+		"url": "https://github.com/SeriousBug/writing-assistant"
+	},
 	"engines": {
 		"vscode": "^1.56.0"
 	},
@@ -89,7 +93,9 @@
 		"onLanguage:xml",
 		"onLanguage:twig",
 		"onLanguage:genstat",
-		"onLanguage:cfml"
+		"onLanguage:cfml",
+		"onLanguage:markdown",
+		"onLanguage:plaintext"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -105,7 +111,7 @@
 				"writing-assistant.autoAnalyzeOn": {
 					"description": "Automatically analyze the current file when editing or saving.",
 					"type": "string",
-					"default": "never",
+					"default": "save",
 					"enum": [
 						"save",
 						"edit",
@@ -222,11 +228,11 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "yarn run -S esbuild-base -- --minify",
+		"vscode:prepublish": "yarn run -S esbuild-base --minify",
 		"esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
-		"compile": "npm run -S esbuild-base -- --sourcemap",
-		"watch": "npm run -S esbuild-base -- --sourcemap --watch",
-		"fmt": "prettier --write \"src/**/*.ts\"&& npm run test -- --fix",
+		"compile": "npm run -S esbuild-base --sourcemap",
+		"watch": "npm run -S esbuild-base --sourcemap --watch",
+		"fmt": "prettier --write \"src/**/*.ts\"&& npm run test --fix",
 		"pretest": "yarn run compile && yarn run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js"
@@ -247,9 +253,11 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"glob": "^7.1.6",
 		"mocha": "^8.2.1",
+		"ovsx": "^0.1.0",
 		"prettier": "^2.3.0",
 		"rimraf": "^3.0.2",
 		"typescript": "^4.3.2",
+		"vsce": "^1.93.0",
 		"vscode-test": "^1.5.0"
 	},
 	"dependencies": {
