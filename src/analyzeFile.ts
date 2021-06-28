@@ -32,7 +32,7 @@ function confidence(message: AnalyzedMessage): number {
   return 1;
 }
 
-export async function analyzeFile(document: vscode.TextDocument) {
+export async function analyzeFile(document: vscode.TextDocument, invokedViaCommand?: boolean) {
   console.log(`${EXTENSION_NAME} is analyzing the file.`);
   try {
     const diagnostics: vscode.Diagnostic[] = [];
@@ -52,10 +52,11 @@ export async function analyzeFile(document: vscode.TextDocument) {
 
     WARNING.set(document.uri, diagnostics);
   } catch (err) {
-    if (err instanceof UnknownLanguageError)
-      vscode.window.showErrorMessage(
-        "The programming language for the current file is not supported.",
-      );
+    if (err instanceof UnknownLanguageError) {
+      const msg = `The programming language ${document.languageId} for the current file ${document.uri.toString()} is not supported.`;
+      console.error(msg);
+      if (invokedViaCommand) vscode.window.showErrorMessage(msg);
+    }
     else {
       vscode.window.showErrorMessage(err);
       throw err;

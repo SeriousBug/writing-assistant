@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const disposableCommand = vscode.commands.registerTextEditorCommand(
     "writing-assistant.analyzeFile",
-    (editor) => analyzeFile(editor.document),
+    (editor) => analyzeFile(editor.document, true),
   );
   context.subscriptions.push(disposableCommand);
 
