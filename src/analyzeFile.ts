@@ -105,11 +105,11 @@ function reportMessages(offset: vscode.Position, file: VFile, diagnostics: vscod
       new vscode.Range(
         new vscode.Position(
           offset.line + found.position.start.line - 1,
-          offset.character + found.position.start.column
+          offset.character + found.position.start.column - 1
         ),
         new vscode.Position(
           offset.line + found.position.end.line - 1,
-          offset.character + found.position.end.column
+          offset.character + found.position.end.column - 1
         )
       ),
       found.reason
