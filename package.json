@@ -168,7 +168,7 @@
 				"writing-assistant.analyses.intensify": {
 					"description": "Check for weak and mitigating wording.",
 					"type": "boolean",
-					"default": true
+					"default": false
 				},
 				"writing-assistant.equality.noBinary": {
 					"description": "Warn about all binary references, e.g. \"he\" or \"she\".",
@@ -264,6 +264,7 @@
 		"dictionary-en": "^3.1.0",
 		"lodash": "^4.17.21",
 		"remark-footnotes": "^3.0.0",
+		"remark-frontmatter": "^3.0.0",
 		"remark-gfm": "^1.0.0",
 		"remark-parse": "^9.0.0",
 		"remark-retext": "^4.0.0",
@@ -279,6 +280,7 @@
 		"retext-simplify": "^6.0.0",
 		"retext-spell": "^4.0.1",
 		"unified": "^9.2.1",
+		"unist-util-visit": "^3.1.0",
 		"vfile": "^5.0.1",
 		"vfile-sort": "^3.0.0"
 	}

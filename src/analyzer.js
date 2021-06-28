@@ -14,6 +14,8 @@ import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkRetext from "remark-retext";
 import remarkFootnotes from "remark-footnotes";
+import remarkFrontmatter from "remark-frontmatter";
+import {visit} from "unist-util-visit";
 
 
 function addAnalyzers(processor) {
@@ -37,10 +39,22 @@ export function analyzer() {
 }
 
 
+function removeFrontmatter() {
+ return (tree, file) => {
+  visit(tree, ["toml", "yaml"], (node, index, parent) => {
+    parent.children.splice(index, 1);
+    return false; // there can only be one frontmatter
+  });
+ };
+}
+
+
 export function markdownAnalyzer() {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkFrontmatter, ["toml", "yaml"])
+    .use(removeFrontmatter)
     .use(remarkFootnotes)
     .use(remarkRetext, analyzer());
   return addAnalyzers(processor);

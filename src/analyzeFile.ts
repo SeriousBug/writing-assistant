@@ -69,7 +69,6 @@ async function analyzeDocument(processor: Processor, diagnostics: vscode.Diagnos
   const file = new VFile(document.getText());
   const tree = processor.parse(file);
   await processor.run(tree, file);
-
   vfileSort(file);
   reportMessages(ZERO_POSITION, file, diagnostics, document);
 }
